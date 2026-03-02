@@ -1,8 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -34,7 +32,15 @@ export async function POST(request) {
       );
     }
 
+    const apiKey = process.env.RESEND_API_KEY;
     const to = process.env.CONTACT_TO_EMAIL;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { success: false, error: "RESEND_API_KEY não configurada." },
+        { status: 500 }
+      );
+    }
 
     if (!to) {
       return NextResponse.json(
@@ -42,6 +48,8 @@ export async function POST(request) {
         { status: 500 }
       );
     }
+
+    const resend = new Resend(apiKey);
 
     const safeFirstName = escapeHtml(first_name);
     const safeLastName = escapeHtml(last_name);
