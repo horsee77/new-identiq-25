@@ -1,0 +1,140 @@
+"use client";
+
+import Image from "next/image";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
+import Rellax from "rellax";
+import AOS from "aos";
+import { ReactSVG } from "react-svg";
+import "aos/dist/aos.css";
+import Link from "next/link";
+
+function BannerOne() {
+    const [animLeft, setAnimLeft] = useState(null);  // substitui 08.webp
+    const [animRight, setAnimRight] = useState(null); // substitui 09.webp
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            new Rellax(".rellax", { speed: -1 });
+        }
+    }, []);
+
+    useEffect(() => {
+        AOS.init({
+            disableMutationObserver: true,
+            once: true,
+        });
+    }, []);
+
+    useEffect(() => {
+        fetch("/assets/lottie/search.json")
+            .then((r) => r.json())
+            .then(setAnimLeft)
+            .catch(() => setAnimLeft(null));
+    }, []);
+
+    return (
+        <div>
+            <div className="rts-banner-area-start">
+                <div className="container">
+                    <div className="row align-items-center">
+                        {/* Left Content */}
+                        <div className="col-lg-5">
+                            <div className="banner-wrapper-one">
+                                <span className="pre-title" data-aos="fade-up" data-aos-duration="1000">
+                                    Conheça a Identiq
+                                </span>
+
+                                <h1
+                                    className="title hero-title"
+                                    data-aos="fade-up"
+                                    data-aos-duration="1000"
+                                    data-aos-delay="300"
+                                >
+                                    Verificação de identidade{" "}
+                                    <span className="keep-together">
+                                        para <span>negócios</span>
+                                    </span>{" "}
+                                    em crescimento
+                                </h1>
+
+                                <p data-aos="fade-up" data-aos-delay="500">
+                                    Ajudamos empresas com verificação de identidade e prevenção a fraudes para se manterem à
+                                    frente na era digital
+                                </p>
+
+                                <Link
+                                    href="/solucoes"
+                                    className="rts-btn btn-primary"
+                                    data-aos="fade-up"
+                                    data-aos-duration="1000"
+                                    data-aos-delay="700"
+                                >
+                                    Ver soluções
+                                    <ReactSVG className="injectable" src="/assets/images/banner/01.svg" />
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Right Content */}
+                        <div className="col-lg-7">
+                            <div className="right-clippath-wrapper d-flex">
+                                {/* LOTTIE 1 (no lugar da 08.webp) */}
+                                <div className="left-image mt--120 mt_sm--70 jara-mask-1" data-speed=".7">
+                                    <div
+                                        className="rellax"
+                                        style={{
+                                            width: "100%",
+                                            aspectRatio: "3 / 2",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        {animLeft ? (
+                                            <Lottie
+                                                animationData={animLeft}
+                                                loop
+                                                autoplay
+                                                style={{ width: "100%", height: "100%" }}
+                                            />
+                                        ) : (
+                                            <Image
+                                                loading="lazy"
+                                                src=""
+                                                alt="banner"
+                                                width={1200}
+                                                height={800}
+                                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="shape-image">
+                                    <Image
+                                        loading="lazy"
+                                        src="/assets/images/banner/shape/01.png"
+                                        alt="shape"
+                                        className="one wow move-left"
+                                        width={200}
+                                        height={800}
+                                    />
+                                    <Image
+                                        loading="lazy"
+                                        src="/assets/images/banner/shape/02.png"
+                                        alt="shape"
+                                        className="two wow move-left"
+                                        width={299}
+                                        height={800}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default BannerOne;
