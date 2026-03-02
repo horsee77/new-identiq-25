@@ -4,20 +4,89 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
 import HeaderTwo from "@/components/header/HeaderTwo";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Icon } from "@iconify/react";
+import Lottie from "lottie-react";
 
 export default function Home() {
+  const [office, setOffice] = useState(null);
+  const consultationForm = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
+  useEffect(() => {
+    let alive = true;
+
+    fetch("/assets/lottie/cardchecklist.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setOffice(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar animação:", error);
+        if (alive) setOffice(null);
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   useEffect(() => {
     AOS.init({
       disableMutationObserver: true,
       once: true,
     });
   }, []);
+
+  const sendConsultationForm = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatusMessage("");
+
+    const formData = new FormData(consultationForm.current);
+
+    const payload = {
+      first_name: formData.get("first_name"),
+      last_name: formData.get("last_name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      company: formData.get("company"),
+      message: formData.get("message"),
+      agree: true,
+      source: "pagina politicas",
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Erro ao enviar mensagem.");
+      }
+
+      setStatusMessage("Mensagem enviada com sucesso!");
+      consultationForm.current?.reset();
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+      setStatusMessage("Não foi possível enviar a mensagem. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -48,7 +117,7 @@ export default function Home() {
                   diminuir falso positivo e manter controle com trilhas.
                 </p>
 
-                <a
+                <Link
                   href="/contato"
                   className="rts-btn btn-primary btn-bold"
                   data-aos="fade-up"
@@ -56,7 +125,7 @@ export default function Home() {
                   data-aos-delay="300"
                 >
                   Falar com especialista
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -67,15 +136,28 @@ export default function Home() {
                 data-aos-duration="1000"
                 data-aos-delay="100"
               >
-                <Image
+                <div
                   className="jarallax-img"
-                  src="/assets/images/consultancy/02.webp"
-                  alt="career"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: "100%", height: "auto" }}
-                />
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {office ? (
+                    <Lottie
+                      animationData={office}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -94,8 +176,8 @@ export default function Home() {
               >
                 <Image
                   className="jarallax-img"
-                  src="/assets/images/consultancy/01.webp"
-                  alt="consultancy"
+                  src="/assets/images/politica/politica-01.png"
+                  alt="Configuração de políticas"
                   width={0}
                   height={0}
                   sizes="100vw"
@@ -120,27 +202,27 @@ export default function Home() {
                   <div className="single-wrapper">
                     <div className="check-wrapper">
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:sliders-horizontal" width="20" height="20" />
                         <p>Regras por perfil, canal e produto</p>
                       </div>
 
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:gauge" width="20" height="20" />
                         <p>Limites e critérios por nível de risco</p>
                       </div>
 
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:git-branch-plus" width="20" height="20" />
                         <p>Rotas de aprovação, revisão e bloqueio</p>
                       </div>
 
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:shield-check" width="20" height="20" />
                         <p>Exceções e casos especiais com governança</p>
                       </div>
 
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:plug-zap" width="20" height="20" />
                         <p>Integração via API e webhooks</p>
                       </div>
                     </div>
@@ -150,6 +232,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+
       </div>
 
       <div className="rts-solution-area rts-section-gapBottom">
@@ -172,8 +256,8 @@ export default function Home() {
                 <div className="single-consulting-one">
                   <div className="thumbnail">
                     <Image
-                      src="/assets/images/consultancy/03.webp"
-                      alt="consulting"
+                      src="/assets/images/politica/poli-1.jpg"
+                      alt="Definição de critérios"
                       width={0}
                       height={0}
                       sizes="100vw"
@@ -192,8 +276,8 @@ export default function Home() {
                 <div className="single-consulting-one">
                   <div className="thumbnail">
                     <Image
-                      src="/assets/images/consultancy/04.webp"
-                      alt="consulting"
+                      src="/assets/images/politica/poli-2.jpg"
+                      alt="Configuração de regras"
                       width={0}
                       height={0}
                       sizes="100vw"
@@ -212,8 +296,8 @@ export default function Home() {
                 <div className="single-consulting-one">
                   <div className="thumbnail">
                     <Image
-                      src="/assets/images/consultancy/05.webp"
-                      alt="consulting"
+                      src="/assets/images/politica/poli-3.jpg"
+                      alt="Rotas de decisão"
                       width={0}
                       height={0}
                       sizes="100vw"
@@ -232,8 +316,8 @@ export default function Home() {
                 <div className="single-consulting-one">
                   <div className="thumbnail">
                     <Image
-                      src="/assets/images/consultancy/06.webp"
-                      alt="consulting"
+                      src="/assets/images/politica/poli-4.jpg"
+                      alt="Ajustes e melhoria contínua"
                       width={0}
                       height={0}
                       sizes="100vw"
@@ -254,7 +338,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* shedule a consultation start */}
       <div className="shedule-a-consultation rts-section-gapTop">
         <div className="container">
           <div className="row align-items-center">
@@ -275,67 +358,103 @@ export default function Home() {
                   <div className="single-wrapper">
                     <div className="check-wrapper">
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:map" width="20" height="20" />
                         <p>Mapeamento do seu fluxo e do apetite a risco</p>
                       </div>
 
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:git-branch-plus" width="20" height="20" />
                         <p>Definição de rotas e critérios por cenário</p>
                       </div>
 
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:plug-zap" width="20" height="20" />
                         <p>Orientação para integração e acompanhamento</p>
                       </div>
                     </div>
                   </div>
 
                   <p className="call">
-                    Fale com a gente em: <a href="/contato">Contato</a>
+                    Fale com a gente em: <Link href="/contato">Contato</Link>
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="col-lg-6 offset-lg-1 mt_sm--30">
-              <form action="#" className="consulting-form">
+              <form
+                ref={consultationForm}
+                onSubmit={sendConsultationForm}
+                className="consulting-form"
+              >
                 <p>Agendar uma conversa</p>
 
                 <div className="input-half-wrapper">
                   <div className="single">
-                    <input type="text" placeholder="Nome" required />
+                    <input
+                      type="text"
+                      name="first_name"
+                      placeholder="Nome"
+                      required
+                    />
                   </div>
                   <div className="single">
-                    <input type="text" placeholder="Sobrenome" required />
+                    <input
+                      type="text"
+                      name="last_name"
+                      placeholder="Sobrenome"
+                      required
+                    />
                   </div>
                 </div>
 
                 <div className="input-half-wrapper">
                   <div className="single">
-                    <input type="text" placeholder="Email corporativo" required />
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email corporativo"
+                      required
+                    />
                   </div>
                   <div className="single">
-                    <input type="text" placeholder="Telefone" />
+                    <input
+                      type="text"
+                      name="phone"
+                      placeholder="Telefone"
+                    />
                   </div>
                 </div>
 
-                <input type="text" placeholder="Empresa" />
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Empresa"
+                />
+
                 <textarea
+                  name="message"
                   placeholder="Escreva sua mensagem"
                   required
                   defaultValue=""
                 />
 
-                <button type="submit" className="rts-btn btn-primary">
-                  Enviar
+                <button
+                  type="submit"
+                  className="rts-btn btn-primary"
+                  disabled={loading}
+                >
+                  {loading ? "Enviando..." : "Enviar"}
                 </button>
+
+                {statusMessage && (
+                  <p style={{ marginTop: "14px" }}>{statusMessage}</p>
+                )}
               </form>
             </div>
           </div>
         </div>
       </div>
-      {/* shedule a consultation end */}
 
       <FooterOne />
       <BackToTop />

@@ -17,7 +17,7 @@ export default function Home() {
       <div>
         <div className="container-large">
           {/* service area start */}
-          <div className="service-single-area-banner development-service bg_image jarallax"></div>
+          <div className="service-single-area-banner marketplace bg_image jarallax"></div>
           {/* service area end */}
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function Home() {
                 <div className="thumbnail-area-large-service-detaile-mid jarallax jara-mask-1">
                   <Image
                     className="jarallax-img"
-                    src="/assets/images/service/07.webp"
+                    src="/assets/images/marketplace/market-02.png"
                     alt="service"
                     width={1200}
                     height={800}
@@ -77,7 +77,7 @@ export default function Home() {
                 <div className="thumbnail-area-large-service-detaile-mid jarallax jara-mask-1">
                   <Image
                     className="jarallax-img"
-                    src="/assets/images/service/08.webp"
+                    src="/assets/images/marketplace/market-03.png"
                     alt="service"
                     width={1200}
                     height={800}

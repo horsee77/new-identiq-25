@@ -20,6 +20,7 @@
     "react-modal-video": "^2.0.2",
     "react-svg": "^16.2.0",
     "rellax": "^1.12.1",
+    "resend": "^6.9.3",
     "swiper": "^11.1.15"
   },
   "devDependencies": {

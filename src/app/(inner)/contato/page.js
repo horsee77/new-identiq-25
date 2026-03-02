@@ -1,40 +1,60 @@
 "use client";
 
+import { useRef, useState } from "react";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
 import HeaderTwo from "@/components/header/HeaderTwo";
-import React, { useRef } from "react";
-import emailjs from "@emailjs/browser";
 import { ReactSVG } from "react-svg";
 
 export default function Home() {
-  const form = useRef();
+  const form = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setStatusMessage("");
 
-    emailjs
-      .sendForm(
-        "your_service_id",
-        "your_template_id",
-        form.current,
-        "your_public_key"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          alert("Mensagem enviada com sucesso!");
-          form.current.reset();
+    const formData = new FormData(form.current);
+
+    const payload = {
+      first_name: formData.get("first_name"),
+      last_name: formData.get("last_name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      company: formData.get("company"),
+      message: formData.get("message"),
+      agree: formData.get("agree") === "on",
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        (error) => {
-          console.log(error.text);
-          alert("Não foi possível enviar. Tente novamente mais tarde.");
-        }
-      );
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Erro ao enviar mensagem.");
+      }
+
+      setStatusMessage("Mensagem enviada com sucesso!");
+      form.current.reset();
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+      setStatusMessage("Não foi possível enviar a mensagem. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="#">
+    <div>
       <HeaderTwo />
 
       <>
@@ -71,6 +91,7 @@ export default function Home() {
                         required
                       />
                     </div>
+
                     <div className="single">
                       <label htmlFor="last">Sobrenome</label>
                       <input
@@ -137,10 +158,18 @@ export default function Home() {
                     </label>
                   </div>
 
-                  <button type="submit" className="rts-btn btn-primary">
-                    Enviar mensagem
-                    <ReactSVG src="assets/images/service/icons/13.svg" alt="arrow" />
+                  <button
+                    type="submit"
+                    className="rts-btn btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? "Enviando..." : "Enviar mensagem"}
+                    <ReactSVG src="/assets/images/service/icons/13.svg" />
                   </button>
+
+                  {statusMessage && (
+                    <p style={{ marginTop: "14px" }}>{statusMessage}</p>
+                  )}
                 </form>
               </div>
             </div>
@@ -155,10 +184,10 @@ export default function Home() {
                 <div className="google-map-wrapper">
                   <iframe
                     src="https://www.google.com/maps?q=-23.117652,-46.556097&z=15&output=embed"
-                    width={600}
-                    height={500}
+                    width="600"
+                    height="500"
                     style={{ border: 0 }}
-                    allowFullScreen=""
+                    allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Mapa Identiq"

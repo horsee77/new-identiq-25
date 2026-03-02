@@ -1,13 +1,66 @@
 // SLUG: /solucoes/devicefingerprint
 // sem hífen
 
+"use client";
+
 import Image from "next/image";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
 import HeaderTwo from "@/components/header/HeaderTwo";
 import CtaOne from "@/components/cta/CtaOne";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [docAnim, setDocAnim] = useState(null);
+  const [flowAnim, setFlowAnim] = useState(null);
+  const [verification, setVerify] = useState(null);
+  const [compliance, setCompliance] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+
+    fetch("/assets/lottie/Fingerprint.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setDocAnim(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar Lottie documents:", error);
+      });
+
+    fetch("/assets/lottie/SecureLogin.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setFlowAnim(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar Lottie flow:", error);
+      });
+
+    fetch("/assets/lottie/datasecurity.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setVerify(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar Lottie verification:", error);
+      });
+
+    fetch("/assets/lottie/security.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setCompliance(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar Lottie compliance:", error);
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   return (
     <div>
       <HeaderTwo />
@@ -31,15 +84,28 @@ export default function Home() {
 
             <div className="col-lg-6 pl--30 pl_md--15 pl_sm--10 pt_md--30 pt_sm--30">
               <div className="thumbnail-top jarallax thumbnail-consultancy" data-speed=".85">
-                <Image
+                <div
                   className="jarallax-img"
-                  src="/assets/images/industry/12.webp"
-                  alt="career"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: "100%", height: "auto" }}
-                />
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {docAnim ? (
+                    <Lottie
+                      animationData={docAnim}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -52,15 +118,28 @@ export default function Home() {
             <div className="row align-items-center">
               <div className="col-lg-6 pr--40 pr_md--10 pr_sm--10 mb_md--30 mb_sm--25">
                 <div className="thumbnail-consultancy jarallax">
-                  <Image
+                  <div
                     className="jarallax-img"
-                    src="/assets/images/industry/02.webp"
-                    alt="consultancy"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%", height: "auto" }}
-                  />
+                    style={{
+                      width: "100%",
+                      aspectRatio: "16 / 10",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {flowAnim ? (
+                      <Lottie
+                        animationData={flowAnim}
+                        loop
+                        autoplay
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    ) : (
+                      <div style={{ width: "100%", height: "100%" }} />
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -147,15 +226,28 @@ export default function Home() {
 
               <div className="col-lg-6 pl--40 pl_md--15 pl_sm--10 mt_md--30 mt_sm--30">
                 <div className="thumbnail-consultancy jarallax">
-                  <Image
+                  <div
                     className="jarallax-img"
-                    src="/assets/images/industry/03.webp"
-                    alt="consultancy"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%", height: "auto" }}
-                  />
+                    style={{
+                      width: "100%",
+                      aspectRatio: "16 / 10",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {verification ? (
+                      <Lottie
+                        animationData={verification}
+                        loop
+                        autoplay
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    ) : (
+                      <div style={{ width: "100%", height: "100%" }} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,10 +255,37 @@ export default function Home() {
         </div>
       </div>
 
-      {/* industry service area start */}
       <div className="industry-serviuce-area rts-section-gap">
         <div className="container">
           <div className="row align-items-center">
+            <div className="col-lg-6">
+              <div className="thumbnail-industry-thumbnail">
+                <div className="thumbnail-consultancy jarallax">
+                  <div
+                    className="jarallax-img"
+                    style={{
+                      width: "100%",
+                      aspectRatio: "16 / 10",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {compliance ? (
+                      <Lottie
+                        animationData={compliance}
+                        loop
+                        autoplay
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    ) : (
+                      <div style={{ width: "100%", height: "100%" }} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="col-lg-6">
               <div className="career-right-two-wrapper industry">
                 <h2 className="title">
@@ -202,35 +321,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            <div className="col-lg-6">
-              <div className="thumbnail-industry-thumbnail">
-                <div className="thumbnail-left left-small">
-                  <Image
-                    src="/assets/images/industry/06.webp"
-                    alt="industry"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </div>
-                <div className="thumbnail-left top">
-                  <Image
-                    src="/assets/images/industry/07.webp"
-                    alt="industry"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-      {/* industry service area end */}
 
       <CtaOne />
       <FooterOne />

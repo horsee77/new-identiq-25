@@ -1,6 +1,3 @@
-// SLUG: /solucoes/monitoramento
-// sem hífen
-
 "use client";
 
 import Image from "next/image";
@@ -9,8 +6,42 @@ import FooterOne from "@/components/footer/FooterOne";
 import HeaderTwo from "@/components/header/HeaderTwo";
 import Accordion from "react-bootstrap/Accordion";
 import CtaOne from "@/components/cta/CtaOne";
+import { Icon } from "@iconify/react";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [admin, setAdmin] = useState(null);
+  const [Detention, setDetention] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+
+    fetch("/assets/lottie/admin.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setAdmin(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar animação:", error);
+        if (alive) setAdmin(null);
+      });
+
+    fetch("/assets/lottie/Detention.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setDetention(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar animação:", error);
+        if (alive) setDetention(null);
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+  
   const styling = {
     backgroundImage: `url(/assets/images/career/03.webp)`,
   };
@@ -39,14 +70,28 @@ export default function Home() {
 
             <div className="col-lg-6 mt_md--30 mt_sm--30 wow fadeInRight">
               <div className="thumbnail-top">
-                <Image
-                  src="/assets/images/career/01.webp"
-                  alt="career"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: "100%", height: "auto" }}
-                />
+                <div
+                  className="jarallax-img"
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {admin ? (
+                    <Lottie
+                      animationData={admin}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -59,14 +104,28 @@ export default function Home() {
           <div className="row">
             <div className="col-lg-6">
               <div className="thumbnail-career-two wow fadeInLeft">
-                <Image
-                  src="/assets/images/career/02.webp"
-                  alt="career"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: "100%", height: "auto" }}
-                />
+                <div
+                  className="jarallax-img"
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {Detention ? (
+                    <Lottie
+                      animationData={Detention}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
 
@@ -82,23 +141,23 @@ export default function Home() {
                   <div className="single-wrapper">
                     <div className="check-wrapper">
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:activity" width="20" height="20" />
                         <p>Coleta de eventos e sinais do seu fluxo</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:radar" width="20" height="20" />
                         <p>Detecção de padrões e mudanças de comportamento</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:shield-alert" width="20" height="20" />
                         <p>Regras para alertar, revisar ou bloquear</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:refresh-cw" width="20" height="20" />
                         <p>Monitoramento de tentativas e recorrência</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:webhook" width="20" height="20" />
                         <p>Integração via API e webhooks</p>
                       </div>
                     </div>
@@ -107,19 +166,19 @@ export default function Home() {
                   <div className="single-wrapper">
                     <div className="check-wrapper">
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:bell-ring" width="20" height="20" />
                         <p>Alertas para o time operacional</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:file-search" width="20" height="20" />
                         <p>Trilhas para auditoria e acompanhamento</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:chart-no-axes-column" width="20" height="20" />
                         <p>Ajustes contínuos por performance</p>
                       </div>
                       <div className="single-check">
-                        <Image src="/assets/images/service/01.svg" alt="service" width={20} height={20} />
+                        <Icon className="check-icon" icon="lucide:zap" width="20" height="20" />
                         <p>Menos perdas com resposta mais rápida</p>
                       </div>
                     </div>
@@ -130,36 +189,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      {/* career video area start */}
-      <div className="career-video-area-large-3 rts-section-gapTop">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div
-                className="career-video-area-large position-relative bg_image"
-                style={styling}
-                data-speed=".8"
-              >
-                <div className="vedio-icone">
-                  <a
-                    className="video-play-button play-video popup-video"
-                    href="https://www.youtube.com/watch?v=vZE0j_WCRvI"
-                  >
-                    <span />
-                  </a>
-                  <div className="video-overlay">
-                    <a className="video-overlay-close" href="#">
-                      ×
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* career video area end */}
 
       {/* company values area start */}
       <div className="company-values-area rts-section-gap">
@@ -181,8 +210,8 @@ export default function Home() {
           <div className="row g-5 mt--30">
             <div className="col-lg-4 wow fadeInUp" data-wow-delay=".1s">
               <div className="single-values-in-action">
-                <div className="icon">
-                  <Image src="/assets/images/career/01.svg" alt="icon" width={48} height={48} />
+                <div className="icon monitor-icon">
+                  <Icon icon="lucide:radar" width="28" height="28" />
                 </div>
                 <div className="information">
                   <h6 className="title">Detecção de padrões</h6>
@@ -193,8 +222,8 @@ export default function Home() {
 
             <div className="col-lg-4 wow fadeInUp" data-wow-delay=".3s">
               <div className="single-values-in-action">
-                <div className="icon">
-                  <Image src="/assets/images/career/02.svg" alt="icon" width={48} height={48} />
+                <div className="icon monitor-icon">
+                  <Icon icon="lucide:zap" width="28" height="28" />
                 </div>
                 <div className="information">
                   <h6 className="title">Resposta mais rápida</h6>
@@ -205,8 +234,8 @@ export default function Home() {
 
             <div className="col-lg-4 wow fadeInUp" data-wow-delay=".5s">
               <div className="single-values-in-action">
-                <div className="icon">
-                  <Image src="/assets/images/career/03.svg" alt="icon" width={48} height={48} />
+                <div className="icon monitor-icon">
+                  <Icon icon="lucide:shield-alert" width="28" height="28" />
                 </div>
                 <div className="information">
                   <h6 className="title">Menos perdas</h6>
@@ -217,8 +246,8 @@ export default function Home() {
 
             <div className="col-lg-4 wow fadeInUp" data-wow-delay=".1s">
               <div className="single-values-in-action">
-                <div className="icon">
-                  <Image src="/assets/images/career/04.svg" alt="icon" width={48} height={48} />
+                <div className="icon monitor-icon">
+                  <Icon icon="lucide:bell-ring" width="28" height="28" />
                 </div>
                 <div className="information">
                   <h6 className="title">Alertas operacionais</h6>
@@ -229,8 +258,8 @@ export default function Home() {
 
             <div className="col-lg-4 wow fadeInUp" data-wow-delay=".3s">
               <div className="single-values-in-action">
-                <div className="icon">
-                  <Image src="/assets/images/career/05.svg" alt="icon" width={48} height={48} />
+                <div className="icon monitor-icon">
+                  <Icon icon="lucide:sliders-horizontal" width="28" height="28" />
                 </div>
                 <div className="information">
                   <h6 className="title">Regras configuráveis</h6>
@@ -241,8 +270,8 @@ export default function Home() {
 
             <div className="col-lg-4 wow fadeInUp" data-wow-delay=".5s">
               <div className="single-values-in-action">
-                <div className="icon">
-                  <Image src="/assets/images/career/06.svg" alt="icon" width={48} height={48} />
+                <div className="icon monitor-icon">
+                  <Icon icon="lucide:file-search" width="28" height="28" />
                 </div>
                 <div className="information">
                   <h6 className="title">Trilhas e auditoria</h6>

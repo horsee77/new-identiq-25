@@ -3,17 +3,40 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
 import HeaderTwo from "@/components/header/HeaderTwo";
-import MoreSolutions from "@/components/service-component/MoreSolution"; // seu carrossel de segmentos
+import MoreSolutions from "@/components/service-component/MoreSolution";
 import CtaFour from "@/components/cta/CtaFour";
 import { Icon } from "@iconify/react";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [Chargeback, setChargeback] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+
+    fetch("/assets/lottie/api.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setChargeback(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar animação:", error);
+        if (alive) setChargeback(null);
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+  
   return (
-    <div className="#">
+    <div>
       <HeaderTwo />
 
       {/* banner */}
@@ -25,7 +48,9 @@ export default function Home() {
                 <div className="bread-plug wow fadeInUp" data-wow-offset={120} data-wow-delay=".2s">
                   <Link href="/">Home</Link>
                   <i className="fa-regular fa-chevron-right" />
-                  <Link className="current" href="/produto/plataforma">Produto</Link>
+                  <Link className="current" href="/produto/plataforma">
+                    Produto
+                  </Link>
                 </div>
 
                 <h1 className="title wow fadeInUp" data-wow-offset={120} data-wow-delay=".4s">
@@ -38,13 +63,33 @@ export default function Home() {
                 </p>
 
                 <div className="d-flex gap-3 mt--30">
-                  <Link href="/produto/api" className="rts-btn btn-primary wow fadeInUp" data-wow-delay=".7s">
+                  <Link
+                    href="/produto/api"
+                    className="rts-btn btn-primary wow fadeInUp"
+                    data-wow-delay=".7s"
+                  >
                     Ver API
-                    <img className="injectable" src="assets/images/service/icons/13.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/13.svg"
+                      alt="Seta"
+                      width={20}
+                      height={20}
+                    />
                   </Link>
-                  <Link href="/contato" className="rts-btn btn-border btn-bold wow fadeInUp" data-wow-delay=".8s">
+
+                  <Link
+                    href="/contato"
+                    className="rts-btn btn-border btn-bold wow fadeInUp"
+                    data-wow-delay=".8s"
+                  >
                     Falar com especialista
-                    <img src="assets/images/service/icons/13.svg" alt="arrow" />
+                    <Image
+                      src="/assets/images/service/icons/13.svg"
+                      alt="Seta"
+                      width={20}
+                      height={20}
+                    />
                   </Link>
                 </div>
               </div>
@@ -52,15 +97,48 @@ export default function Home() {
 
             <div className="col-lg-5">
               <div className="thumbnail-bannr-service-right jarallax">
-                <img className="jarallax-img" src="assets/images/service/04.webp" alt="produto" />
+                <div
+                  className="jarallax-img"
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {Chargeback ? (
+                    <Lottie
+                      animationData={Chargeback}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="shape-area-start">
-          <img src="assets/images/banner/06.png" alt="shape" className="one wow move-right" />
-          <img src="assets/images/banner/07.png" alt="shape" className="two wow move-left" />
+          <Image
+            src="/assets/images/banner/06.png"
+            alt="Shape decorativo"
+            className="one wow move-right"
+            width={300}
+            height={300}
+          />
+          <Image
+            src="/assets/images/banner/07.png"
+            alt="Shape decorativo"
+            className="two wow move-left"
+            width={200}
+            height={120}
+          />
         </div>
       </div>
 
@@ -88,7 +166,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/plataforma">
                     <h3 className="title animated fadeIn">Plataforma</h3>
-                    <img className="injectable" src="assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="Seta"
+                      width={20}
+                      height={20}
+                    />
                   </Link>
                 </div>
               </div>
@@ -102,7 +186,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/api">
                     <h3 className="title animated fadeIn">API e webhooks</h3>
-                    <img className="injectable" src="assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="Seta"
+                      width={20}
+                      height={20}
+                    />
                   </Link>
                 </div>
               </div>
@@ -116,7 +206,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/workflows">
                     <h3 className="title animated fadeIn">Workflows e regras</h3>
-                    <img className="injectable" src="assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="Seta"
+                      width={20}
+                      height={20}
+                    />
                   </Link>
                 </div>
               </div>
@@ -130,83 +226,14 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/seguranca">
                     <h3 className="title animated fadeIn">Segurança</h3>
-                    <img className="injectable" src="assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="Seta"
+                      width={20}
+                      height={20}
+                    />
                   </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* como funciona */}
-      <div className="rts-solution-area rts-section-gapBottom">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="title-center-style-two">
-                <h2 className="title">Como o produto funciona</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="container-consulting mt--80 mt_sm--30">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="consulting-step">
-                <div className="timeline-line" />
-
-                <div className="single-consulting-one">
-                  <div className="thumbnail">
-                    <img src="assets/images/consultancy/03.webp" alt="step" />
-                  </div>
-                  <div className="right-area">
-                    <h4 className="title">Evento do fluxo</h4>
-                    <p>Você envia o evento do cadastro ou transação.</p>
-                  </div>
-                  <div className="timeline-dot">
-                    <div className="time-line-circle" />
-                  </div>
-                </div>
-
-                <div className="single-consulting-one">
-                  <div className="thumbnail">
-                    <img src="assets/images/consultancy/04.webp" alt="step" />
-                  </div>
-                  <div className="right-area">
-                    <h4 className="title">Validações</h4>
-                    <p>Documentos, biometria, face match e sinais do dispositivo.</p>
-                  </div>
-                  <div className="timeline-dot">
-                    <div className="time-line-circle" />
-                  </div>
-                </div>
-
-                <div className="single-consulting-one">
-                  <div className="thumbnail">
-                    <img src="assets/images/consultancy/05.webp" alt="step" />
-                  </div>
-                  <div className="right-area">
-                    <h4 className="title">Score e regras</h4>
-                    <p>Aplicação de políticas por risco e limites configuráveis.</p>
-                  </div>
-                  <div className="timeline-dot">
-                    <div className="time-line-circle" />
-                  </div>
-                </div>
-
-                <div className="single-consulting-one">
-                  <div className="thumbnail">
-                    <img src="assets/images/consultancy/06.webp" alt="step" />
-                  </div>
-                  <div className="right-area">
-                    <h4 className="title">Decisão e trilhas</h4>
-                    <p>Aprovar, revisar ou bloquear com registro para auditoria.</p>
-                  </div>
-                  <div className="timeline-dot">
-                    <div className="time-line-circle" />
-                  </div>
                 </div>
               </div>
             </div>

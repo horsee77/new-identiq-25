@@ -62,16 +62,7 @@ function FooterOne() {
                         <Link href="/empresa/sobre">Sobre</Link>
                       </li>
                       <li>
-                        <Link href="/empresa/carreiras">Carreiras</Link>
-                      </li>
-                      <li>
-                        <Link href="/cases">Cases</Link>
-                      </li>
-                      <li>
-                        <Link href="/blog">Conteúdo</Link>
-                      </li>
-                      <li>
-                        <Link href="/docs">Documentação</Link>
+                        <Link href="/news">News</Link>
                       </li>
                       <li>
                         <Link href="/contato">Contato</Link>
@@ -123,9 +114,6 @@ function FooterOne() {
                         <Link href="/faq">FAQ</Link>
                       </li>
                       <li>
-                        <Link href="/seguranca">Segurança</Link>
-                      </li>
-                      <li>
                         <Link href="/contato">Contato</Link>
                       </li>
                     </ul>
@@ -149,18 +137,8 @@ function FooterOne() {
                 <div className="social-copyright-area">
                   <ul>
                     <li>
-                      <Link href="#" aria-label="Visite nosso Facebook">
-                        <i className="fa-brands fa-facebook-f" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#" aria-label="Visite nosso Twitter">
-                        <i className="fa-brands fa-twitter" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#" aria-label="Visite nosso Youtube">
-                        <i className="fa-brands fa-youtube" />
+                      <Link href="#" aria-label="Visite nosso Instagram">
+                        <i className="fa-brands fa-instagram" />
                       </Link>
                     </li>
                     <li>

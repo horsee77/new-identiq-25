@@ -15988,28 +15988,28 @@ li.has-dropdown:hover .submenu {
   }
 }
 
-.service-single-area-banner.it-strategies {
-  background-image: url(/assets/images/service/11.webp);
+.service-single-area-banner.fintech {
+  background-image: url(/assets/images/service/11.png);
 }
 
-.service-single-area-banner.cyber-security {
-  background-image: url(/assets/images/service/12.webp);
+.service-single-area-banner.ecommerce {
+  background-image: url(/assets/images/ecommerce/ecommerce-01.png);
 }
 
-.service-single-area-banner.technology-service {
-  background-image: url(/assets/images/service/13.webp);
+.service-single-area-banner.marketplace {
+  background-image: url(/assets/images/marketplace/marketplace-01.png);
 }
 
-.service-single-area-banner.it-service {
-  background-image: url(/assets/images/service/14.webp);
+.service-single-area-banner.bank {
+  background-image: url(/assets/images/bancos/bnk-01.png);
 }
 
-.service-single-area-banner.development-service {
-  background-image: url(/assets/images/service/15.webp);
+.service-single-area-banner.crypto {
+  background-image: url(/assets/images/crypto/crypto-01.png);
 }
 
-.service-single-area-banner.ai-learning-service {
-  background-image: url(/assets/images/service/16.webp);
+.service-single-area-banner.seguro {
+  background-image: url(/assets/images/seguro/seguro-01.png);
 }
 
 .service-single-area-banner.management-service {

@@ -4,6 +4,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import HeaderTwo from "@/components/header/HeaderTwo";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
@@ -11,7 +13,7 @@ import CtaOne from "@/components/cta/CtaOne";
 import Accordion from "react-bootstrap/Accordion";
 import { Icon } from "@iconify/react";
 
-function page() {
+function Page() {
   return (
     <>
       <HeaderTwo />
@@ -30,13 +32,29 @@ function page() {
           <div className="row g-5">
             <div className="col-lg-4">
               <div className="thumbnail-banner-choose-us jarallax" data-speed=".8">
-                <img src="assets/images/banner/06.webp" className="jarallax-img" alt="banner" />
+                <Image
+                  src="/assets/images/banner/06.webp"
+                  className="jarallax-img"
+                  alt="banner"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
               </div>
             </div>
 
             <div className="col-lg-8">
               <div className="thumbnail-banner-choose-us jarallax" data-speed=".8">
-                <img src="assets/images/banner/07.webp" className="jarallax-img" alt="banner" />
+                <Image
+                  src="/assets/images/banner/07.webp"
+                  className="jarallax-img"
+                  alt="banner"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
               </div>
             </div>
 
@@ -98,7 +116,14 @@ function page() {
 
             <div className="col-lg-7">
               <div className="thumbnail-main-wrapper-choose-us">
-                <img src="assets/images/service/09.webp" alt="service" />
+                <Image
+                  src="/assets/images/service/09.webp"
+                  alt="service"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
               </div>
             </div>
           </div>
@@ -122,7 +147,14 @@ function page() {
               </div>
 
               <div className="thumbnail-working-process">
-                <img src="assets/images/service/10.webp" alt="" />
+                <Image
+                  src="/assets/images/service/10.webp"
+                  alt="processo de segurança e compliance"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
               </div>
             </div>
 
@@ -257,7 +289,14 @@ function page() {
 
             <div className="col-lg-6">
               <div className="why-choose-faq-thumbnail">
-                <img src="assets/images/why-choose-us/01.webp" alt="why" />
+                <Image
+                  src="/assets/images/why-choose-us/01.webp"
+                  alt="why"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "100%", height: "auto" }}
+                />
               </div>
             </div>
           </div>
@@ -265,7 +304,7 @@ function page() {
       </div>
       {/* why choose us faq area end */}
 
-      {/* compliance em “cards” (mantém o bloco de pricing, mas vira compliance) */}
+      {/* compliance em cards */}
       <div className="why-choose-pricing-area rts-section-gap">
         <div className="container">
           <div className="row align-items-center">
@@ -284,10 +323,15 @@ function page() {
                       <p>Controle de permissões e ações críticas</p>
                     </div>
 
-                    <a href="/contato" className="rts-btn btn-border btn-bold">
+                    <Link href="/contato" className="rts-btn btn-border btn-bold">
                       Falar com especialista
-                      <img src="assets/images/service/icons/13.svg" alt="arrow" />
-                    </a>
+                      <Image
+                        src="/assets/images/service/icons/13.svg"
+                        alt="arrow"
+                        width={18}
+                        height={18}
+                      />
+                    </Link>
 
                     <div className="body">
                       <div className="check-single">
@@ -323,10 +367,15 @@ function page() {
                       <p>Histórico por caso pronto para revisão</p>
                     </div>
 
-                    <a href="/solucoes/auditoria" className="rts-btn btn-border btn-bold">
+                    <Link href="/solucoes/auditoria" className="rts-btn btn-border btn-bold">
                       Ver auditoria e trilhas
-                      <img src="assets/images/service/icons/13.svg" alt="arrow" />
-                    </a>
+                      <Image
+                        src="/assets/images/service/icons/13.svg"
+                        alt="arrow"
+                        width={18}
+                        height={18}
+                      />
+                    </Link>
 
                     <div className="body">
                       <div className="check-single">
@@ -351,7 +400,7 @@ function page() {
               </div>
             </div>
 
-            {/* lado direito vira “pilares” */}
+            {/* lado direito vira pilares */}
             <div className="col-lg-6 pl--100 pl_md--15 pl_sm--10 pt_md--30 pt_sm--30">
               <div className="faq-why-choose-left-accordion">
                 <h2 className="title">
@@ -397,4 +446,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

@@ -3,6 +3,7 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
@@ -10,10 +11,32 @@ import HeaderTwo from "@/components/header/HeaderTwo";
 import CtaFour from "@/components/cta/CtaFour";
 import MoreSolutions from "@/components/service-component/MoreSolution";
 import { Icon } from "@iconify/react";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [Chargeback, setChargeback] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+
+    fetch("/assets/lottie/Workflow.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setChargeback(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar animação:", error);
+        if (alive) setChargeback(null);
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+  
   return (
-    <div className="#">
+    <div>
       <HeaderTwo />
 
       {/* banner */}
@@ -42,14 +65,33 @@ export default function Home() {
                 </p>
 
                 <div className="d-flex gap-3 mt--30">
-                  <Link href="/contato" className="rts-btn btn-primary wow fadeInUp" data-wow-delay=".7s">
+                  <Link
+                    href="/contato"
+                    className="rts-btn btn-primary wow fadeInUp"
+                    data-wow-delay=".7s"
+                  >
                     Falar com especialista
-                    <img className="injectable" src="../assets/images/service/icons/13.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/13.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
 
-                  <Link href="/produto/api" className="rts-btn btn-border btn-bold wow fadeInUp" data-wow-delay=".8s">
+                  <Link
+                    href="/produto/api"
+                    className="rts-btn btn-border btn-bold wow fadeInUp"
+                    data-wow-delay=".8s"
+                  >
                     Ver API e webhooks
-                    <img src="../assets/images/service/icons/13.svg" alt="arrow" />
+                    <Image
+                      src="/assets/images/service/icons/13.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
                 </div>
               </div>
@@ -57,15 +99,48 @@ export default function Home() {
 
             <div className="col-lg-5">
               <div className="thumbnail-bannr-service-right jarallax">
-                <img className="jarallax-img" src="../assets/images/service/04.webp" alt="workflows" />
+                <div
+                  className="jarallax-img"
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {Chargeback ? (
+                    <Lottie
+                      animationData={Chargeback}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="shape-area-start">
-          <img src="../assets/images/banner/06.png" alt="shape" className="one wow move-right" />
-          <img src="../assets/images/banner/07.png" alt="shape" className="two wow move-left" />
+          <Image
+            src="/assets/images/banner/06.png"
+            alt="shape"
+            className="one wow move-right"
+            width={300}
+            height={120}
+          />
+          <Image
+            src="/assets/images/banner/07.png"
+            alt="shape"
+            className="two wow move-left"
+            width={200}
+            height={120}
+          />
         </div>
       </div>
 
@@ -94,7 +169,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/plataforma">
                     <h3 className="title animated fadeIn">Plataforma</h3>
-                    <img className="injectable" src="../assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
                 </div>
               </div>
@@ -108,7 +189,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/api">
                     <h3 className="title animated fadeIn">API e webhooks</h3>
-                    <img className="injectable" src="../assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
                 </div>
               </div>
@@ -122,7 +209,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/workflows">
                     <h3 className="title animated fadeIn">Workflows e regras</h3>
-                    <img className="injectable" src="../assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
                 </div>
               </div>
@@ -136,7 +229,13 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/seguranca">
                     <h3 className="title animated fadeIn">Segurança</h3>
-                    <img className="injectable" src="../assets/images/service/icons/21.svg" alt="arrow" />
+                    <Image
+                      className="injectable"
+                      src="/assets/images/service/icons/21.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
                 </div>
               </div>
@@ -153,7 +252,12 @@ export default function Home() {
               {/* item 1 */}
               <div className="single-service-list wow fadeInUp" data-wow-offset={120} data-wow-delay=".2s">
                 <div className="icon">
-                  <Icon icon="mdi:account-multiple-check-outline" width="44" height="44" style={{ color: "#fff" }} />
+                  <Icon
+                    icon="mdi:account-multiple-check-outline"
+                    width="44"
+                    height="44"
+                    style={{ color: "#fff" }}
+                  />
                 </div>
                 <div className="main-information-area">
                   <h3 className="title">Jornadas por perfil e canal</h3>
@@ -161,15 +265,20 @@ export default function Home() {
                     Crie fluxos diferentes por produto, canal e perfil, definindo quando exigir validações.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
-
-                </a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
 
               {/* item 2 */}
               <div className="single-service-list wow fadeInUp" data-wow-offset={120} data-wow-delay=".4s">
                 <div className="icon">
-                  <Icon icon="mdi:clipboard-check-outline" width="44" height="44" style={{ color: "#fff" }} />
+                  <Icon
+                    icon="mdi:clipboard-check-outline"
+                    width="44"
+                    height="44"
+                    style={{ color: "#fff" }}
+                  />
                 </div>
                 <div className="main-information-area">
                   <h3 className="title">Regras e limites configuráveis</h3>
@@ -177,15 +286,20 @@ export default function Home() {
                     Defina critérios por valor, risco e comportamento para aprovar, revisar ou bloquear.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
-
-                </a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
 
               {/* item 3 */}
               <div className="single-service-list wow fadeInUp" data-wow-offset={120} data-wow-delay=".6s">
                 <div className="icon">
-                  <Icon icon="mdi:filter-check-outline" width="44" height="44" style={{ color: "#fff" }} />
+                  <Icon
+                    icon="mdi:filter-check-outline"
+                    width="44"
+                    height="44"
+                    style={{ color: "#fff" }}
+                  />
                 </div>
                 <div className="main-information-area">
                   <h3 className="title">Menos falso positivo</h3>
@@ -193,15 +307,20 @@ export default function Home() {
                     Ajuste thresholds e combinações de sinais para reduzir bloqueios desnecessários e aumentar aprovação.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
-
-                </a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
 
               {/* item 4 */}
               <div className="single-service-list wow fadeInUp" data-wow-offset={120} data-wow-delay=".8s">
                 <div className="icon">
-                  <Icon icon="mdi:timeline-check-outline" width="44" height="44" style={{ color: "#fff" }} />
+                  <Icon
+                    icon="mdi:timeline-check-outline"
+                    width="44"
+                    height="44"
+                    style={{ color: "#fff" }}
+                  />
                 </div>
                 <div className="main-information-area">
                   <h3 className="title">Trilhas e rotas de revisão</h3>
@@ -209,9 +328,9 @@ export default function Home() {
                     Direcione casos para revisão manual quando necessário e mantenha evidências para auditoria.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
-
-                </a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
             </div>
           </div>

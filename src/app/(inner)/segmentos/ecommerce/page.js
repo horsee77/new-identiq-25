@@ -1,6 +1,8 @@
 // SLUG: /segmentos/ecommerce
 // sem hífen
 
+import Image from "next/image";
+import Link from "next/link";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
 import HeaderTwo from "@/components/header/HeaderTwo";
@@ -9,13 +11,13 @@ import MoreSolutions from "@/components/service-component/MoreSolution";
 
 export default function Home() {
   return (
-    <div className="#">
+    <div>
       <HeaderTwo />
 
       <div>
         <div className="container-large">
           {/* service area start */}
-          <div className="service-single-area-banner development-service bg_image jarallax"></div>
+          <div className="service-single-area-banner ecommerce bg_image jarallax"></div>
           {/* service area end */}
         </div>
       </div>
@@ -61,12 +63,24 @@ export default function Home() {
             <div className="row g-5">
               <div className="col-lg-6">
                 <div className="thumbnail-area-large-service-detaile-mid jarallax jara-mask-1">
-                  <img className="jarallax-img" src="assets/images/service/07.webp" alt="service" />
+                  <Image
+                    className="jarallax-img"
+                    src="/assets/images/ecommerce/ecommerce-02.png"
+                    alt="Imagem de serviço"
+                    width={900}
+                    height={700}
+                  />
                 </div>
               </div>
               <div className="col-lg-6">
                 <div className="thumbnail-area-large-service-detaile-mid jarallax jara-mask-1">
-                  <img className="jarallax-img" src="assets/images/service/08.webp" alt="service" />
+                  <Image
+                    className="jarallax-img"
+                    src="/assets/images/ecommerce/ecommerce-03.png"
+                    alt="Imagem de serviço"
+                    width={900}
+                    height={700}
+                  />
                 </div>
               </div>
             </div>
@@ -115,10 +129,21 @@ export default function Home() {
                   Agende uma conversa para reduzir chargeback e aumentar conversão com decisões de risco
                   em tempo real no seu e commerce.
                 </p>
-                <a href="/contato" className="rts-btn btn-primary wow fadeInUp" data-wow-delay=".5s">
+
+                <Link
+                  href="/contato"
+                  className="rts-btn btn-primary wow fadeInUp"
+                  data-wow-delay=".5s"
+                >
                   Ver soluções
-                  <img className="injectable" src="assets/images/service/icons/13.svg" alt="arrow" />
-                </a>
+                  <Image
+                    className="injectable"
+                    src="/assets/images/service/icons/13.svg"
+                    alt="Seta"
+                    width={20}
+                    height={20}
+                  />
+                </Link>
               </div>
             </div>
           </div>

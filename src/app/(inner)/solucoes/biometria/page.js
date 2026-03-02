@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AOS from "aos";
@@ -13,6 +13,9 @@ import HeaderTwo from "@/components/header/HeaderTwo";
 
 export default function Home() {
   const [heroAnim, setHeroAnim] = useState(null);
+  const consultationForm = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
   useEffect(() => {
     AOS.init({
@@ -39,6 +42,48 @@ export default function Home() {
     };
   }, []);
 
+  const sendConsultationForm = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatusMessage("");
+
+    const formData = new FormData(consultationForm.current);
+
+    const payload = {
+      first_name: formData.get("first_name"),
+      last_name: formData.get("last_name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      company: formData.get("company"),
+      message: formData.get("message"),
+      agree: true,
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Erro ao enviar mensagem.");
+      }
+
+      setStatusMessage("Mensagem enviada com sucesso!");
+      consultationForm.current?.reset();
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+      setStatusMessage("Não foi possível enviar a mensagem. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <HeaderTwo />
@@ -64,9 +109,10 @@ export default function Home() {
                     data-aos-duration="1000"
                     data-aos-delay="300"
                   >
-                    Confirme que existe uma pessoa real no processo e reduza tentativas com identidade
-                    falsa. A Identiq aplica biometria e prova de vida para aumentar segurança sem travar
-                    usuários legítimos.
+                    Confirme que existe uma pessoa real no processo e reduza
+                    tentativas com identidade falsa. A Identiq aplica biometria e
+                    prova de vida para aumentar segurança sem travar usuários
+                    legítimos.
                   </p>
 
                   <Link
@@ -143,8 +189,9 @@ export default function Home() {
                   </h2>
 
                   <p>
-                    Adicione uma camada de segurança quando o risco exigir. Você define quando aplicar
-                    biometria e prova de vida e recebe o resultado para aprovar, revisar ou reprovar.
+                    Adicione uma camada de segurança quando o risco exigir. Você
+                    define quando aplicar biometria e prova de vida e recebe o
+                    resultado para aprovar, revisar ou reprovar.
                   </p>
 
                   <div className="check-wrapper-main">
@@ -207,6 +254,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
 
         <div className="rts-solution-area rts-section-gapBottom">
           <div className="container">
@@ -304,7 +352,6 @@ export default function Home() {
       </>
 
       <>
-        {/* shedule a consultation start */}
         <div className="shedule-a-consultation rts-section-gapTop">
           <div className="container">
             <div className="row align-items-center">
@@ -315,8 +362,9 @@ export default function Home() {
                   </h2>
 
                   <p className="disc">
-                    Agende uma conversa para entender como biometria e prova de vida podem reduzir
-                    fraude e manter uma experiência rápida para usuários legítimos.
+                    Agende uma conversa para entender como biometria e prova de
+                    vida podem reduzir fraude e manter uma experiência rápida para
+                    usuários legítimos.
                   </p>
 
                   <div className="check-wrapper">
@@ -364,45 +412,80 @@ export default function Home() {
               </div>
 
               <div className="col-lg-6 offset-lg-1 mt_sm--30">
-                <form action="#" className="consulting-form">
+                <form
+                  ref={consultationForm}
+                  onSubmit={sendConsultationForm}
+                  className="consulting-form"
+                >
                   <p>Agendar uma conversa</p>
 
                   <div className="input-half-wrapper">
                     <div className="single">
-                      <input type="text" placeholder="Nome" required />
+                      <input
+                        type="text"
+                        name="first_name"
+                        placeholder="Nome"
+                        required
+                      />
                     </div>
                     <div className="single">
-                      <input type="text" placeholder="Sobrenome" required />
+                      <input
+                        type="text"
+                        name="last_name"
+                        placeholder="Sobrenome"
+                        required
+                      />
                     </div>
                   </div>
 
                   <div className="input-half-wrapper">
                     <div className="single">
-                      <input type="email" placeholder="Email corporativo" required />
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Email corporativo"
+                        required
+                      />
                     </div>
                     <div className="single">
-                      <input type="text" placeholder="Telefone" />
+                      <input
+                        type="text"
+                        name="phone"
+                        placeholder="Telefone"
+                      />
                     </div>
                   </div>
 
-                  <input type="text" placeholder="Empresa" />
+                  <input
+                    type="text"
+                    name="company"
+                    placeholder="Empresa"
+                  />
+
                   <textarea
-                    name="mensagem"
+                    name="message"
                     id="mensagem"
                     placeholder="Escreva sua mensagem"
                     required
                     defaultValue=""
                   />
 
-                  <button type="submit" className="rts-btn btn-primary">
-                    Enviar
+                  <button
+                    type="submit"
+                    className="rts-btn btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? "Enviando..." : "Enviar"}
                   </button>
+
+                  {statusMessage && (
+                    <p style={{ marginTop: "14px" }}>{statusMessage}</p>
+                  )}
                 </form>
               </div>
             </div>
           </div>
         </div>
-        {/* shedule a consultation end */}
       </>
 
       <FooterOne />

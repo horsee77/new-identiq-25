@@ -194,7 +194,7 @@ function Nav() {
 
             {/* SERVIÇOS (dropdown simples) */}
             <li className="has-dropdown">
-              <Link className="nav-link" href="/servicos">
+              <Link className="nav-link" href="">
                 Serviços
                 <i className="fa-duotone fa-regular fa-chevron-down" />
               </Link>
@@ -270,7 +270,7 @@ function Nav() {
 
             {/* RECURSOS */}
             <li className="has-dropdown">
-              <Link className="nav-link" href="/recursos">
+              <Link className="nav-link" href="">
                 Recursos <i className="fa-duotone fa-regular fa-chevron-down" />
               </Link>
 
@@ -292,7 +292,7 @@ function Nav() {
 
             {/* EMPRESA */}
             <li className="has-dropdown">
-              <Link className="nav-link" href="/empresa">
+              <Link className="nav-link" href="">
                 Empresa <i className="fa-duotone fa-regular fa-chevron-down" />
               </Link>
 

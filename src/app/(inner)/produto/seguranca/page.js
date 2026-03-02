@@ -3,6 +3,7 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import BackToTop from "@/components/common/BackToTop";
 import FooterOne from "@/components/footer/FooterOne";
@@ -10,8 +11,29 @@ import HeaderTwo from "@/components/header/HeaderTwo";
 import CtaFour from "@/components/cta/CtaFour";
 import MoreSolutions from "@/components/service-component/MoreSolution";
 import { Icon } from "@iconify/react";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [Chargeback, setChargeback] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+
+    fetch("/assets/lottie/websites.json")
+      .then((r) => r.json())
+      .then((data) => {
+        if (alive) setChargeback(data);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar animação:", error);
+        if (alive) setChargeback(null);
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
   return (
     <div>
       <HeaderTwo />
@@ -60,10 +82,12 @@ export default function Home() {
                     data-wow-delay=".7s"
                   >
                     Falar com especialista
-                    <img
+                    <Image
                       className="injectable"
                       src="/assets/images/service/icons/13.svg"
                       alt="arrow"
+                      width={18}
+                      height={18}
                     />
                   </Link>
 
@@ -73,7 +97,12 @@ export default function Home() {
                     data-wow-delay=".8s"
                   >
                     Ver API e webhooks
-                    <img src="/assets/images/service/icons/13.svg" alt="arrow" />
+                    <Image
+                      src="/assets/images/service/icons/13.svg"
+                      alt="arrow"
+                      width={18}
+                      height={18}
+                    />
                   </Link>
                 </div>
               </div>
@@ -81,26 +110,47 @@ export default function Home() {
 
             <div className="col-lg-5">
               <div className="thumbnail-bannr-service-right jarallax">
-                <img
+                <div
                   className="jarallax-img"
-                  src="/assets/images/service/04.webp"
-                  alt="segurança"
-                />
+                  style={{
+                    width: "100%",
+                    aspectRatio: "16 / 10",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {Chargeback ? (
+                    <Lottie
+                      animationData={Chargeback}
+                      loop
+                      autoplay
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  ) : (
+                    <div style={{ width: "100%", height: "100%" }} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="shape-area-start">
-          <img
+          <Image
             src="/assets/images/banner/06.png"
             alt="shape"
             className="one wow move-right"
+            width={300}
+            height={120}
           />
-          <img
+          <Image
             src="/assets/images/banner/07.png"
             alt="shape"
             className="two wow move-left"
+            width={200}
+            height={120}
           />
         </div>
       </div>
@@ -130,10 +180,12 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/plataforma">
                     <h3 className="title animated fadeIn">Plataforma</h3>
-                    <img
+                    <Image
                       className="injectable"
                       src="/assets/images/service/icons/21.svg"
                       alt="arrow"
+                      width={18}
+                      height={18}
                     />
                   </Link>
                 </div>
@@ -148,10 +200,12 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/api">
                     <h3 className="title animated fadeIn">API e webhooks</h3>
-                    <img
+                    <Image
                       className="injectable"
                       src="/assets/images/service/icons/21.svg"
                       alt="arrow"
+                      width={18}
+                      height={18}
                     />
                   </Link>
                 </div>
@@ -166,10 +220,12 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/workflows">
                     <h3 className="title animated fadeIn">Workflows e regras</h3>
-                    <img
+                    <Image
                       className="injectable"
                       src="/assets/images/service/icons/21.svg"
                       alt="arrow"
+                      width={18}
+                      height={18}
                     />
                   </Link>
                 </div>
@@ -184,10 +240,12 @@ export default function Home() {
                 <div className="title-area">
                   <Link href="/produto/seguranca">
                     <h3 className="title animated fadeIn">Segurança</h3>
-                    <img
+                    <Image
                       className="injectable"
                       src="/assets/images/service/icons/21.svg"
                       alt="arrow"
+                      width={18}
+                      height={18}
                     />
                   </Link>
                 </div>
@@ -222,7 +280,9 @@ export default function Home() {
                     Permissões por papel e ambientes para reduzir risco operacional e manter governança na operação.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas"></a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
 
               {/* item 2 */}
@@ -245,7 +305,9 @@ export default function Home() {
                     Autenticação e assinatura de webhooks para garantir integridade e reduzir risco de abuso.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas"></a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
 
               {/* item 3 */}
@@ -268,7 +330,9 @@ export default function Home() {
                     Eventos e decisões com histórico para auditoria, reprocessos e evidências por caso.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas"></a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
 
               {/* item 4 */}
@@ -291,7 +355,9 @@ export default function Home() {
                     Regras e políticas por risco para reduzir fraude, manter consistência e proteger decisões críticas.
                   </p>
                 </div>
-                <a href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas"></a>
+                <Link href="/solucoes/auditoria" aria-label="Ir para Auditoria e trilhas">
+                  <span className="visually-hidden">Ir para Auditoria e trilhas</span>
+                </Link>
               </div>
             </div>
           </div>

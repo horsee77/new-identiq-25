@@ -49,167 +49,70 @@ function SideBar({ isSidebarOpen, toggleSidebar }) {
                 </Link>
 
                 <ul className={`submenu ${openMenu === 1 ? "mm-collapse mm-show" : "mm-collapse"}`}>
-                  {/* Verificação de Identidade */}
-                  <li className="has-droupdown">
-                    <Link
-                      href="#"
-                      className="main"
-                      onClick={(e) => handleToggleSubmenu(e, 11)}
-                      aria-expanded={openMenu === 11}
-                    >
-                      Verificação de Identidade
+                  <li>
+                    <Link href="/solucoes/kyc" onClick={toggleSidebar}>
+                      KYC e Onboarding
                     </Link>
-
-                    <ul
-                      className={`submenu ${openMenu === 11 ? "mm-collapse mm-show" : "mm-collapse"}`}
-                    >
-                      <li>
-                        <Link href="/solucoes/kyc" onClick={toggleSidebar}>
-                          KYC e Onboarding
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/documentos" onClick={toggleSidebar}>
-                          Validação de Documentos
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/biometria" onClick={toggleSidebar}>
-                          Biometria e Prova de Vida
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/facescan" onClick={toggleSidebar}>
-                          Face Scan e Match
-                        </Link>
-                      </li>
-                    </ul>
                   </li>
-
-                  {/* Antifraude */}
-                  <li className="has-droupdown">
-                    <Link
-                      href="#"
-                      className="main"
-                      onClick={(e) => handleToggleSubmenu(e, 12)}
-                      aria-expanded={openMenu === 12}
-                    >
-                      Antifraude
+                  <li>
+                    <Link href="/solucoes/documentos" onClick={toggleSidebar}>
+                      Validação de Documentos
                     </Link>
-
-                    <ul
-                      className={`submenu ${openMenu === 12 ? "mm-collapse mm-show" : "mm-collapse"}`}
-                    >
-                      <li>
-                        <Link href="/solucoes/risco" onClick={toggleSidebar}>
-                          Score e Risco
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/chargeback" onClick={toggleSidebar}>
-                          Prevenção de Chargeback
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/devicefingerprint" onClick={toggleSidebar}>
-                          Device Fingerprinting
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/monitoramento" onClick={toggleSidebar}>
-                          Monitoramento Contínuo
-                        </Link>
-                      </li>
-                    </ul>
                   </li>
-
-                  {/* Compliance */}
-                  <li className="has-droupdown">
-                    <Link
-                      href="#"
-                      className="main"
-                      onClick={(e) => handleToggleSubmenu(e, 13)}
-                      aria-expanded={openMenu === 13}
-                    >
-                      Compliance
+                  <li>
+                    <Link href="/solucoes/biometria" onClick={toggleSidebar}>
+                      Biometria e Prova de Vida
                     </Link>
-
-                    <ul
-                      className={`submenu ${openMenu === 13 ? "mm-collapse mm-show" : "mm-collapse"}`}
-                    >
-                      <li>
-                        <Link href="/solucoes/aml" onClick={toggleSidebar}>
-                          AML e Screening
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/sancoes-pep" onClick={toggleSidebar}>
-                          Sanções e PEP
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/auditoria" onClick={toggleSidebar}>
-                          Auditoria e Trilhas
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/solucoes/politicas" onClick={toggleSidebar}>
-                          Políticas e Regras
-                        </Link>
-                      </li>
-                    </ul>
                   </li>
-
-                  {/* Para quem (igual nav / megamenu) */}
-                  <li className="has-droupdown">
-                    <Link
-                      href="#"
-                      className="main"
-                      onClick={(e) => handleToggleSubmenu(e, 14)}
-                      aria-expanded={openMenu === 14}
-                    >
-                      Para quem
+                  <li>
+                    <Link href="/solucoes/facescan" onClick={toggleSidebar}>
+                      Face Scan e Match
                     </Link>
-
-                    <ul
-                      className={`submenu ${openMenu === 14 ? "mm-collapse mm-show" : "mm-collapse"}`}
-                    >
-                      <li>
-                        <Link href="/segmentos/fintech" onClick={toggleSidebar}>
-                          Fintechs
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/segmentos/ecommerce" onClick={toggleSidebar}>
-                          E-commerce
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/segmentos/marketplace" onClick={toggleSidebar}>
-                          Marketplaces
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/segmentos/bancos" onClick={toggleSidebar}>
-                          Bancos e Instituições
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/segmentos/cripto" onClick={toggleSidebar}>
-                          Cripto e Web3
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/segmentos/seguros" onClick={toggleSidebar}>
-                          Seguros
-                        </Link>
-                      </li>
-                    </ul>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/risco" onClick={toggleSidebar}>
+                      Score e Risco
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/chargeback" onClick={toggleSidebar}>
+                      Prevenção de Chargeback
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/devicefingerprint" onClick={toggleSidebar}>
+                      Device Fingerprinting
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/monitoramento" onClick={toggleSidebar}>
+                      Monitoramento Contínuo
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/aml" onClick={toggleSidebar}>
+                      AML e Screening
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/sancoes-pep" onClick={toggleSidebar}>
+                      Sanções e PEP
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/auditoria" onClick={toggleSidebar}>
+                      Auditoria e Trilhas
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/solucoes/politicas" onClick={toggleSidebar}>
+                      Políticas e Regras
+                    </Link>
                   </li>
                 </ul>
               </li>
 
-              {/* PARA QUEM (seção direta - opcional, mantida) */}
+              {/* PARA QUEM */}
               <li className="has-droupdown">
                 <Link
                   href="#"
@@ -397,13 +300,8 @@ function SideBar({ isSidebarOpen, toggleSidebar }) {
           <div className="rts-social-border-area right-sidebar mt--80">
             <ul>
               <li>
-                <Link href="#" aria-label="Facebook" data-description="social">
-                  <i className="fa-brands fa-facebook-f" />
-                </Link>
-              </li>
-              <li>
-                <Link href="#" aria-label="Twitter" data-description="social">
-                  <i className="fa-brands fa-twitter" />
+                <Link href="#" aria-label="Instagram" data-description="social">
+                  <i className="fa-brands fa-instagram" />
                 </Link>
               </li>
               <li>
@@ -411,20 +309,9 @@ function SideBar({ isSidebarOpen, toggleSidebar }) {
                   <i className="fa-brands fa-linkedin-in" />
                 </Link>
               </li>
-              <li>
-                <Link href="#" aria-label="Pinterest" data-description="social">
-                  <i className="fa-brands fa-pinterest" />
-                </Link>
-              </li>
-              <li>
-                <Link href="#" aria-label="YouTube" data-description="social">
-                  <i className="fa-brands fa-youtube" />
-                </Link>
-              </li>
             </ul>
           </div>
         </div>
-        {/* mobile menu area end */}
       </div>
     </div>
   );
